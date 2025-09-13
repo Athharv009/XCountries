@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const Card = ({ name, flag, abbr }) => {
+const Card = ({ name, flag}) => {
   return (
     <div
       style={{
@@ -30,7 +30,7 @@ export default function Countries() {
     fetch(API)
       .then((res) => res.json())
       .then((data) => setCountryData(data))
-      .then((err) => console.log("Error fetching data: ",err));
+      .catch((err) => console.log("Error fetching data: ",err));
   }, []);
 
   return (
@@ -40,11 +40,12 @@ export default function Countries() {
         style={{
           display: "flex",
           flexWrap: "wrap",
-          gap: "20px",
+          gap: "10px",
+          justifyContent: "center"
         }}
       >
-        {countryData.map(({ name, flag, abbr }, e) => (
-          <Card key={e} name={name} flag={flag} abbr={abbr} />
+        {countryData.map(({ name, flag, abbr }) => (
+          <Card key={abbr} name={name} flag={flag} abbr={abbr} />
         ))}
       </div>
     </div>
