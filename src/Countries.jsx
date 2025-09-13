@@ -30,7 +30,9 @@ export default function Countries() {
     fetch(API)
       .then((res) => res.json())
       .then((data) => setCountryData(data))
-      .catch((err) => console.log("Error fetching data: ",err));
+      .catch((err) => {
+        console.error("Error fetching data: ",err)
+      });
   }, []);
 
   return (
@@ -44,8 +46,8 @@ export default function Countries() {
           justifyContent: "center"
         }}
       >
-        {countryData.map(({ name, flag, abbr }) => (
-          <Card key={abbr} name={name} flag={flag} abbr={abbr} />
+        {countryData.map(({ name, flag},e) => (
+          <Card key={e} name={name} flag={flag} />
         ))}
       </div>
     </div>
