@@ -1,59 +1,52 @@
 import { useEffect, useState } from "react";
 
-const Card = ({name, flag}) => {
-    return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                border: "1px solid gray",
-                borderRadius: "10px",
-                margin: "10px",
-                height: "200px",
-                width: "200px",
-                textAlign: "center"
-            }}
-        >
-            <img 
-                src={flag}
-                alt={`Flag of ${name}`}
-                width={"85px"}
-                height={"85px"}
-             />
-            <h2>{name}</h2>
-        </div>
-    )
-} 
+const Card = ({ name, flag, abbr }) => {
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "1px solid gray",
+        borderRadius: "10px",
+        height: "200px",
+        width: "200px",
+        gap: "4px",
+        margin: "10px",
+      }}
+    >
+      <img src={flag} alt={`Flag of ${name}`} height={"85px"} width={"85px"} />
+      <h4>{name}</h4>
+    </div>
+  );
+};
 
 const API = "https://xcountries-backend.azurewebsites.net/all";
-export default function Countries () {
-    const [countriesData , setCountriesData] = useState([]);
+export default function Countries() {
+  const [countryData, setCountryData] = useState([]);
 
-    useEffect(() => {
-        fetch(API)
-        .then((res) => res.json())
-        .then((data) => setCountriesData(data))
-        .catch((error) => console.log("Error fetching data: " + error))
-    }, [])
+  useEffect(() => {
+    fetch(API)
+      .then((res) => res.json())
+      .then((data) => setCountryData(data))
+      .then((err) => console.log("Error fetching data: ",err));
+  }, []);
 
-
-    return (
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <h1>World of Country Flags</h1>
-            <div
-                style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: "20px",
-                    justifyContent: "center"
-                }}
-            >
-                {countriesData.map(({name, flag, abbr},e) => (
-                    <Card key={e} name={name} flag={flag} abbr={abbr}/>
-                ))}
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <h1 style={{ textAlign: "center" }}>Countries of the World</h1>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "20px",
+        }}
+      >
+        {countryData.map(({ name, flag, abbr }, e) => (
+          <Card key={e} name={name} flag={flag} abbr={abbr} />
+        ))}
+      </div>
+    </div>
+  );
 }
